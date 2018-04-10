@@ -408,7 +408,7 @@ static bool process_inotify_event(struct inotify_event* event) {
   if (is_dir && event->mask & (IN_DELETE | IN_MOVED_FROM)) {
     for (int i=0; i<array_size(node->kids); i++) {
       watch_node* kid = array_get(node->kids, i);
-      if (kid != NULL && strncmp(path_buf, kid->path, kid->path_len) == 0) {
+      if (kid != NULL && strncmp(path_buf, kid->path, kid->path_len + 1) == 0) {
         rm_watch(kid->wd, false);
         array_put(node->kids, i, NULL);
         break;
